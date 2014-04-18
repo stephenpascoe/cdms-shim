@@ -1,0 +1,12 @@
+
+Things to do
+
+ - [ ] Define shim for cdtime
+ - [ ] Define shim for udunits
+ - [X] Do we need regrid2?
+   - Assume no -- can be extended later if necessary
+   - We are removing regrid2, genutil and cdutil for the moment
+ - [ ] Remove references to cdat_info
+ - [ ] Turn shim API into ABC
+ - [ ] Port all license terms over
+ - [ ] what is _bindex.so for?
