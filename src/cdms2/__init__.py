@@ -1,15 +1,7 @@
 """
 CDMS module-level API
 """
-try:
-    import cdat_info,os,sys
-    if cdat_info.ping is False:
-        import urllib2,os
-        urllib2.urlopen("http://uv-cdat.llnl.gov/UVCDATLogger/%s/%s/cdat/start" % (os.getlogin(),sys.platform))
-        cdat_info.ping = True
-except:
-    cdat_info.ping = False
-    pass
+
 __all__ = ["cdmsobj", "axis", "coord", "grid", "hgrid", "avariable", "sliceut", "error", "variable", "fvariable", "tvariable", "dataset", "database", "cache", "selectors", "MV2", "convention", "bindex", "auxcoord", "gengrid", "gsHost", "gsStatVar"]
 # Errors
 from error import CDMSError

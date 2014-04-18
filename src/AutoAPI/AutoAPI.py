@@ -3,17 +3,16 @@ import types
 import inspect
 import optparse
 import sys
-import cdat_info
+
 
 class Info:
-##     name='Template'
     def __init__(self,parent):
         self.url='http://cdat.sf.net'
         self.doc="""This diagnostic is not documented yet"""
         self.type='class'
         self.programminglanguage="Python"
         self.author="PCMDI's software team"
-        self.version= '.'.join(map(str,cdat_info.version()))
+        #self.version= ''
         self.codepath = str(type(parent)).split("'")[1]
         self.hide=['go','fromXml','toXml','toDOM','printXml','scanDocString','stripSectionsFromDoc','hide']
 
