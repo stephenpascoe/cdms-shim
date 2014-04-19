@@ -133,11 +133,11 @@ class CompTime(CdTime):
 
 def relativetime(value, units):
     raise NotImplementedError
-reltime = reltime
+reltime = relativetime
 
 def componenttime(year, month=None, day=None, hour=None, minute=None, second=None):
     raise NotImplementedError
-comptime = comptime
+comptime = componenttime
 
 def abstime(value, units):
     raise NotImplementedError
