@@ -3,11 +3,14 @@ Run tests taken from CDAT/Packages/cdms/Test.
 
 """
 
-from pkg_resources import resource_stream
+import os
+
 from unittest import TestCase
 import tempfile, os, shutil
 
 import cdms2
+
+here = os.path.dirname(__file__)
 
 def detect_nc4():
     """
@@ -86,10 +89,9 @@ class CdTest(TestCase):
 
 
     def runTest(self, module):
-        fh = resource_stream('cdat_lite.test.test_cdms',
-                             module+'.py')
-        context = globals().copy()
-        exec fh in context
+        with open(os.path.join(here, module+'.py')) as fh:
+            context = globals().copy()
+            exec fh in context
 
     def tearDown(self):
         shutil.rmtree(self._tmpdir)

@@ -11,11 +11,13 @@ from unittest import TestCase
 import pkg_resources
 import cdms2 as cdms
 
+here = os.path.dirname(__file__)
+
 # These two files are identical except one defines it's true longitude in
 # the domain -180 to 180 and the other 0 to 360.
-rotgrid180 = pkg_resources.resource_filename('cdat_lite.test', 'rg180.nc')
-rotgrid360 = pkg_resources.resource_filename('cdat_lite.test', 'rg360.nc')
-rotgridAttr = pkg_resources.resource_filename('cdat_lite.test', 'rg_attr.nc')
+rotgrid180 = os.path.join(here, 'rg180.nc')
+rotgrid360 = os.path.join(here, 'rg360.nc')
+rotgridAttr = os.path.join(here, 'rg_attr.nc')
 
 class TestRotGrid(TestCase):
     def _doSubset(self, cdms_file):

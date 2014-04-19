@@ -7,13 +7,15 @@ An informal module for noting down things that might need testing.
 import pkg_resources, cdms2
 import numpy, os
 
+here = os.path.dirname(__file__)
+
 def test_netcdf():
     """
     Some problems being encountered using cdms on Python2.5
 
     """
 
-    f = pkg_resources.resource_filename('cdat_lite.test', 'tas_mo_clim.nc')
+    f = os.path.join(here, 'tas_mo_clim.nc')
     d = cdms2.open(f)
     v = d['climseas']
     s = v[slice(0,1,None)]
@@ -67,7 +69,7 @@ def test_arithmathic():
     As contributed by Chris (lee@ashimaresearch.com)
 
     """
-    nc_file = pkg_resources.resource_filename('cdat_lite.test', 'lee_data.nc')
+    nc_file = os.path.join(here, 'lee_data.nc')
     nc = cdms2.open(nc_file)
     d = nc.variables["data"]
 
