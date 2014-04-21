@@ -1,7 +1,7 @@
 
 Things to do
 
- - [ ] Define shim for cdtime
+ - [X] Define shim for cdtime
  - [ ] Define shim for udunits
  - [ ] Define shim for bindex (maybe leave NotImplemented)
  - [X] Do we need regrid2?
@@ -10,3 +10,6 @@ Things to do
  - [X] Remove references to cdat_info
  - [ ] Turn shim API into ABC
  - [ ] Port all license terms over
+
+
+Importing cdms2 requires cdtime to work therefore we should start with that.
