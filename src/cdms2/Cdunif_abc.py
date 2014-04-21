@@ -9,7 +9,7 @@ class AbstractCdunifFile(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __init__(self, filename, node, history=None):
+    def __init__(self, filename, mode, history=None):
         if history is not None:
             raise NotImplementedError('cdunif-shim does not support adding history on file creation')
 
