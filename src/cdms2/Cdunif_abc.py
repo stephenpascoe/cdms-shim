@@ -14,7 +14,7 @@ class AbstractCdunifFile(object):
             raise NotImplementedError('cdunif-shim does not support adding history on file creation')
 
     @abstractproperty
-    def attributes(self):
+    def dimensions(self):
         raise NotImplementedError
 
     @abstractproperty
@@ -33,10 +33,6 @@ class AbstractCdunifFile(object):
 
     @abstractmethod
     def __setattr__(self, attr, value):
-        raise NotImplementedError
-
-    @abstractmethod
-    def __repr__(self):
         raise NotImplementedError
 
     @abstractmethod
