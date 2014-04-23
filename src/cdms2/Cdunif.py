@@ -7,13 +7,15 @@ import netCDF4 as NC
 
 from Cdunif_abc import AbstractCdunifFile, AbstractCdunifVariable
 
+class CdunifError(Exception):
+    pass
+
 class CdunifFile(AbstractCdunifFile):
     def __init__(self, filename, mode, history=None):
-        if history is not None:
-            raise NotImplementedError('cdms-shim does not support adding history on file creation')
+        if history is not None:            raise NotImplementedError('cdms-shim does not support adding history on file creation')
         #!TODO: check mode translation
 
-        self._obj = netCDF4.Dataset(filename, mode)
+        self.__dict__['_obj'] = NC.Dataset(filename, mode)
 
     @property
     def variables(self):
@@ -66,7 +68,7 @@ class CdunifFile(AbstractCdunifFile):
 class CdunifVariable(AbstractCdunifVariable):
 
     def __init__(self, variable):
-        self._obj = variable
+        self.__dict__['_obj'] = variable
 
     @property
     def shape(self):
