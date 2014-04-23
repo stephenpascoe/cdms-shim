@@ -117,7 +117,7 @@ def CdunifSetNCFLAGS(flagname, flagval):
 
     _ncflags[flagname] = flagval
 
-def CdunifGetNCFLAGS(flagname, flagval):
+def CdunifGetNCFLAGS(flagname):
     if flagname not in _ncflags:
         raise ValueError('Unrecognised NetCDF flag %s' % flagname)
 
