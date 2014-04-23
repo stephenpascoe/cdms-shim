@@ -853,9 +853,12 @@ class CdmsFile(CdmsObj, cuDataset, AutoAPI.AutoAPI):
 
         # self.attributes returns the Cdunif file dictionary. 
 ##         self.replace_external_attributes(self._file_.__dict__)
-        for att in  self._file_.__dict__.keys():
-            self.__dict__.__setitem__(att,self._file_.__dict__[att])
-            self.attributes[att]=self._file_.__dict__[att]
+
+
+        #!FIXME: cdms-shim will not support __dict__ access
+        for att in  self._file_._attrs():
+            self.__dict__.__setitem__(att,self._file_._getattr(att))
+            self.attributes[att]=self._file_._getattr(att)
         self._boundAxis_ = None         # Boundary axis for cell vertices
         if self._mode_=='w':
             self.Conventions = convention.CFConvention.current
@@ -970,7 +973,7 @@ class CdmsFile(CdmsObj, cuDataset, AutoAPI.AutoAPI):
                 # Set the variable grid
                 var.setGrid(grid)
         except:
-            self.close()
+            #self.close()
             raise
 
     # setattr writes external global attributes to the file

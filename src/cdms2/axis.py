@@ -1698,8 +1698,8 @@ class FileAxis(AbstractAxis):
             self.name_in_file = name_in_file
         # Combine the attributes of the variable object, if any
         if obj is not None:
-            for attname in self._obj_.__dict__.keys():
-                attval = getattr(self._obj_,attname)
+            for attname in self._obj_._attrs():
+                attval = self._obj_._getattr(attname)
                 if type(attval)!=types.BuiltinFunctionType:
                     self.__dict__[attname]  = attval
                     att = self.attributes

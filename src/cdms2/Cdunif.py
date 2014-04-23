@@ -28,14 +28,14 @@ class CdunifFile(AbstractCdunifFile):
     @property
     def dimensioninfo(self):
         """
-        A dictionary {'dimname': (units, typecode, name, ?, dimtype, order), ...}
+        A dictionary {'dimname': (units, typecode, name, varname, dimtype, order), ...}
 
         dimtype is always 'global' for NetCDF-classic.
         units and typecode are detected from any variable of the same name.
-        ? appears to be ''
+        varname appears to be '' for NetCDF-classic
 
         """
-        #!FIXME: find out what the 4th item in the tuple is.
+
 
         ret = {}
         for i, dimname in enumerate(self._obj.dimensions):
@@ -61,6 +61,13 @@ class CdunifFile(AbstractCdunifFile):
 
     def __setattr__(self, attr, value):
         return self._obj.setncattr(attr, value)
+
+    # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
+    def _attrs(self):
+        return self._obj.ncattrs()
+
+    def _getattr(self, attr):
+        return self._obj.getncattr(attr)
 
     def close(self):
         self._obj.close()
@@ -105,7 +112,12 @@ class CdunifVariable(AbstractCdunifVariable):
     def dimensions(self):
         return self._obj.dimensions
 
-    #!FIXME: how to emulate attributes in __dict__
+    # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
+    def _attrs(self):
+        return self._obj.ncattrs()
+
+    def _getattr(self, attr):
+        return self._obj.getncattr(attr)
 
     def __getattr__(self, attr):
         return self._obj.getncattr(attr)

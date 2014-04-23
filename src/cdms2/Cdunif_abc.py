@@ -33,7 +33,18 @@ class AbstractCdunifFile(object):
         """
         raise NotImplementedError
 
-    #!FIXME: How to emulate attributes in __dict__
+    # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
+    @abstractmethod
+    def _attrs(self):
+        """
+        Return a dictionary of dataset attributes.
+
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def _getattr(self, attr):
+        raise NotImplementedError
 
     @abstractmethod
     def __getattr__(self, attr):
@@ -77,7 +88,14 @@ class AbstractCdunifVariable(object):
     def dimensions(self):
         raise NotImplementedError
 
-    #!FIXME: how to emulate attributes in __dict__
+    # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
+    @abstractmethod
+    def _attrs(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def _getattr(self, attr):
+        raise NotImplementedError
 
     @abstractmethod
     def __getattr__(self, attr):
