@@ -23,6 +23,14 @@ class AbstractCdunifFile(object):
 
     @abstractproperty
     def dimensioninfo(self):
+        """
+        A dictionary {'dimname': (units, typecode, name, ?, dimtype, order), ...}
+
+        dimtype is always 'global' for NetCDF-classic.
+        units and typecode are detected from any variable of the same name.
+        ? appears to be ''
+
+        """
         raise NotImplementedError
 
     #!FIXME: How to emulate attributes in __dict__
@@ -89,6 +97,34 @@ class AbstractCdunifVariable(object):
 
     @abstractmethod
     def __setitem__(self, key, value):
+        raise NotImplementedError
+
+    @abstractmethod
+    def typecode(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def assignValue(self, value):
+        raise NotImplementedError
+
+    @abstractmethod
+    def getValue(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def getitem(self, item):
+        raise NotImplementedError
+
+    @abstractmethod
+    def getslice(self, item):
+        raise NotImplementedError
+
+    @abstractmethod
+    def setitem(self, item, value):
+        raise NotImplementedError
+
+    @abstractmethod
+    def setslice(self, low, high, value):
         raise NotImplementedError
 
 

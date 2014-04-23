@@ -27,7 +27,34 @@ class CdunifFile(AbstractCdunifFile):
 
     @property
     def dimensioninfo(self):
-        raise NotImplementedError
+        """
+        A dictionary {'dimname': (units, typecode, name, ?, dimtype, order), ...}
+
+        dimtype is always 'global' for NetCDF-classic.
+        units and typecode are detected from any variable of the same name.
+        ? appears to be ''
+
+        """
+        #!FIXME: find out what the 4th item in the tuple is.
+
+        ret = {}
+        for i, dimname in enumerate(self._obj.dimensions):
+            try:
+                var = self.variables[dimname]
+            except KeyError:
+                units = ''
+                typecode = ''
+            else:
+                try:
+                    units = var._obj.getncattr('units')
+                except AttributeError:
+                    units = ''
+                typecode = var._obj.dtype.char
+
+            ret[dimname] = (units, typecode, dimname, '', 'global', i)
+
+        return ret
+
 
     def __getattr__(self, attr):
         return self._obj.getncattr(attr)
@@ -76,7 +103,7 @@ class CdunifVariable(AbstractCdunifVariable):
 
     @property
     def dimensions(self):
-        return {k: len(v) for k, v in self._obj.dimensions.items()}
+        return self._obj.dimensions
 
     #!FIXME: how to emulate attributes in __dict__
 
@@ -94,6 +121,28 @@ class CdunifVariable(AbstractCdunifVariable):
 
     def __setitem__(self, key, value):
         return self._obj.__setitem__(key, value)
+
+    def typecode(self):
+        return self._obj.dtype.char
+
+    def assignValue(self, value):
+        self._obj[:] = value
+
+    def getValue(self):
+        return self._obj[:]
+
+    def getitem(self, item):
+        return self._obj[item]
+
+    def getslice(self, item):
+        return self._obj[item]
+
+    def setitem(self, item, value):
+        self._obj[item] = value
+
+    def setslice(self, low, high, value):
+        self._obj[low:high] = value
+
 
 
 _ncflags = {
