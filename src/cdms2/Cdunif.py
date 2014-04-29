@@ -3,6 +3,8 @@ Implementation of Cdunif on top of netCDF4-python
 
 """
 
+import numpy as np
+
 import netCDF4 as NC
 
 from Cdunif_abc import AbstractCdunifFile, AbstractCdunifVariable
@@ -93,7 +95,17 @@ class CdunifFile(AbstractCdunifFile):
                                                        zlib=zlib, complevel=complevel))
 
     def readDimension(self, name):
-        return len(self._obj.dimensions[name])
+        try:
+            dimvar = self._obj.variables[name]
+            return dimvar[:]
+        except KeyError:
+            try: 
+                dim = self._obj.dimensions[name]
+            except KeyError:
+                raise TypeError('Dimension not found')
+            else:
+                return np.arange(len(dim), dtype=np.float32)
+
 
     def sync(self):
         return self._obj.sync()

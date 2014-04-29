@@ -68,6 +68,13 @@ class AbstractCdunifFile(object):
 
     @abstractmethod
     def readDimension(self, name):
+        """
+        Return the array representing dimension `name`.
+
+        If a coordinate-array exists return that array, otherwise return
+        the range of floats of the right length.
+
+        """
         raise NotImplementedError
 
     @abstractmethod
