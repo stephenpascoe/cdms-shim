@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # Adapted for numpy/ma/cdms2 by convertcdms.py
 
+import os
+
 import numpy.ma as MA
 
-from pkg_resources import resource_filename
-
+here = os.path.dirname(__file__)
 errors = []
 
 NTIME = 3
@@ -41,4 +42,4 @@ def get_sample_data_dir():
 
     """
     
-    return resource_filename('cdat_lite.test.test_cdms', 'sample_data')
+    return os.path.join(here, 'sample_data')
