@@ -521,12 +521,12 @@ class DatasetVariable(AbstractVariable):
             try:
                 var = f.variables[self.name_in_file]
                 if fci==None:
-                    result = self._returnArray(apply(var.getitem,tuple(slicelist)),0)
+                    result = self._returnArray(apply(var.getitem,(tuple(slicelist), )),0)
                 else:
                     # If there's a forecast axis, the file doesn't know about it so
                     # don't use it in slicing data out of the file.
                     result = self._returnArray( apply( var.getitem, \
-                                   tuple( slicelist[0:fci]+slicelist[fci+1:] ) ), \
+                                   (tuple( slicelist[0:fci]+slicelist[fci+1:], ) ) ), \
                                                 0 )
                     # But the result still needs an index in the forecast direction,
                     # which is simple to do because there is only one forecast per file:
@@ -557,12 +557,12 @@ class DatasetVariable(AbstractVariable):
                     try:
                         var = f.variables[self.name_in_file]
                         if fci==None:
-                            chunk = apply(var.getitem,tuple(slicelist))
+                            chunk = apply(var.getitem,(tuple(slicelist), ))
                         else:
                             # If there's a forecast axis, the file doesn't know about it so
                             # don't use it in slicing data out of the file.
                             chunk = apply( var.getitem, \
-                                           tuple( slicelist[0:fci]+slicelist[fci+1:] ) )
+                                           (tuple( slicelist[0:fci]+slicelist[fci+1:] ), ) )
                             # But the chunk still needs an index in the forecast direction,
                             # which is simple to do because there is only one forecast per file:
                             chunk.resize( map(lenSlice,slicelist) )
@@ -605,12 +605,12 @@ class DatasetVariable(AbstractVariable):
                         try:
                             var = f.variables[self.name_in_file]
                             if fci==None:
-                                chunk = apply(var.getitem,tuple(slicelist))
+                                chunk = apply(var.getitem,(tuple(slicelist), ))
                             else:
                                 # If there's a forecast axis, the file doesn't know about it so
                                 # don't use it in slicing data out of the file.
                                 chunk = apply( var.getitem, \
-                                               tuple( slicelist[0:fci]+slicelist[fci+1:] ) )
+                                               (tuple( slicelist[0:fci]+slicelist[fci+1:] ),) )
                                 # But the chunk still needs an index in the forecast direction,
                                 # which is simple to do because there is only one forecast per file:
                                 chunk.resize( map(lenSlice,slicelist) )

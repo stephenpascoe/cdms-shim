@@ -122,7 +122,7 @@ class AbstractCdunifVariable(object):
         raise NotImplementedError
 
     @abstractmethod
-    def __getitem__(self, key):
+    def __getitem__(self, key, default=None):
         raise NotImplementedError
 
     @abstractmethod

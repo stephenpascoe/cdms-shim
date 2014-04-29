@@ -80,7 +80,7 @@ class FileVariable(DatasetVariable):
             raise CDMSError, FileClosed+self.id
         if self.rank() == 0:
             return self._obj_.getValue()
-        result = apply(self._obj_.getitem,slist)
+        result = apply(self._obj_.getitem,(slist, ))
 
         # If slices with negative strides were input, apply the appropriate
         # reversals.
