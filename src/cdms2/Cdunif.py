@@ -25,7 +25,17 @@ class CdunifFile(AbstractCdunifFile):
 
     @property
     def dimensions(self):
-        return {k: len(v) for k, v in self._obj.dimensions.items()}
+        #!NOTE: should return None if unlimited and not 0
+        def dim_len(dim):
+            if dim.isunlimited():
+                if len(dim) == 0:
+                    return 0
+                else:
+                    return None
+            else:
+                return len(dim)
+
+        return {k: dim_len(v) for k, v in self._obj.dimensions.items()}
 
     @property
     def dimensioninfo(self):

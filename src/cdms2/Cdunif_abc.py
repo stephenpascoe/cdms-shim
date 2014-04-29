@@ -15,6 +15,11 @@ class AbstractCdunifFile(object):
 
     @abstractproperty
     def dimensions(self):
+        """
+        A dictionary mapping dimension names to lengths.
+        If a dimension is unlimited but not 0 should return None.
+
+        """
         raise NotImplementedError
 
     @abstractproperty
