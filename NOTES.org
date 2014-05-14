@@ -13,3 +13,13 @@ Things to do
 
 
 Importing cdms2 requires cdtime to work therefore we should start with that.
+
+Do we need regrid?  It is used by cdms2.axis, cdms2.avariable and cdms2.grid
+
+ - cdms2.axis : only used to create gausian/equalarea axes.  Reimplement
+ - cdms2.avariable 
+   - used in several regrid methods. Remove
+   - used in subSlice in some circumstances : possibly used for rotated grids.  Remove with warning.
+ - cdms2.grid : 
+   - used in genBounds() (similar to cdms2.axis) : reimplement
+   - used in classify() : as above
