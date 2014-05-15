@@ -177,8 +177,8 @@ class CdunifVariable(AbstractCdunifVariable):
     def getitem(self, item):
         return self._obj[item]
 
-    def getslice(self, item):
-        return self._obj[item]
+    def getslice(self, low, high):
+        return self._obj[low:high]
 
     def setitem(self, item, value):
         self._obj[item] = value
