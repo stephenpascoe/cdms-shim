@@ -13,7 +13,6 @@ from error import CDMSError
 from axis import axisMatchIndex, axisMatchAxis, axisMatches, unspecified, CdtimeTypes, AbstractAxis
 import selectors
 import copy
-# from regrid2 import Regridder, PressureRegridder, CrossSectionRegridder
 #import PropertiedClasses
 from convention import CF1
 from grid import AbstractRectGrid
@@ -879,15 +878,8 @@ class AbstractVariable(CdmsObj, Slab):
     def regrid (self, togrid, missing=None, order=None, mask=None):
         """return self regridded to the new grid. Keyword arguments
         are as for regrid.Regridder."""
-        from regrid2 import Regridder
 
-        if togrid is None: 
-            return self
-        else:
-            fromgrid = self.getGrid()
-            regridf = Regridder(fromgrid, togrid)
-            result = regridf(self, missing=missing, order=order, mask=mask)
-            return result
+        raise NotImplemented('Regridding is not supported in cdms-shim')
 
     def pressureRegrid (self, newLevel, missing=None, order=None, method="log"):
         """Return the variable regridded to new pressure levels.
@@ -897,14 +889,8 @@ class AbstractVariable(CdmsObj, Slab):
           or "linear" for linear interpolation.
         <missing> and <order> are as for regrid.PressureRegridder.
         """
-        from regrid2 import PressureRegridder
 
-        fromlevel = self.getLevel()
-        if fromlevel is None:
-            raise CDMSError, 'No pressure level'
-        pregridf = PressureRegridder(fromlevel, newLevel)
-        result = pregridf(self, missing=missing, order=order, method=method)
-        return result
+        raise NotImplemented('Regridding is not supported in cdms-shim')
 
     def crossSectionRegrid(self, newLevel, newLatitude, missing=None, order=None, method="log"):
         """Return the variable regridded to new pressure levels and latitudes.
@@ -915,17 +901,8 @@ class AbstractVariable(CdmsObj, Slab):
           or "linear" for linear interpolation.
         <missing> and <order> are as for regrid.CrossSectionRegridder.
         """
-        from regrid2 import CrossSectionRegridder
 
-        fromlevel = self.getLevel()
-        fromlat = self.getLatitude()
-        if fromlevel is None:
-            raise CDMSError, 'No pressure level'
-        if fromlat is None:
-            raise CDMSError, 'No latitude level'
-        xregridf = CrossSectionRegridder(fromlat, newLatitude, fromlevel, newLevel)
-        result = xregridf(self, missing=missing, order=order, method=method)
-        return result
+        raise NotImplemented('Regridding is not supported in cdms-shim')
 
     def _process_specs (self, specs, keys):
         """Process the arguments for a getSlice, getRegion, etc.
