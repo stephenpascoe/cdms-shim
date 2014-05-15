@@ -12,6 +12,13 @@ from Cdunif_abc import AbstractCdunifFile, AbstractCdunifVariable
 class CdunifError(Exception):
     pass
 
+
+def _remove_unicode(x):
+    if type(x) == unicode:
+        return x.encode('utf-8')
+    else:
+        return x
+
 class CdunifFile(AbstractCdunifFile):
     def __init__(self, filename, mode, history=None):
         if history is not None:            raise NotImplementedError('cdms-shim does not support adding history on file creation')
@@ -21,7 +28,7 @@ class CdunifFile(AbstractCdunifFile):
 
     @property
     def variables(self):
-        return {k: CdunifVariable(v) for k, v in self._obj.variables.items()}
+        return {_remove_unicode(k): CdunifVariable(v) for k, v in self._obj.variables.items()}
 
     @property
     def dimensions(self):
@@ -35,7 +42,7 @@ class CdunifFile(AbstractCdunifFile):
             else:
                 return len(dim)
 
-        return {k: dim_len(v) for k, v in self._obj.dimensions.items()}
+        return {_remove_unicode(k): dim_len(v) for k, v in self._obj.dimensions.items()}
 
     @property
     def dimensioninfo(self):
@@ -62,24 +69,26 @@ class CdunifFile(AbstractCdunifFile):
                 except AttributeError:
                     units = ''
                 typecode = var._obj.dtype.char
-
-            ret[dimname] = (units, typecode, dimname, '', 'global', i)
-
+                
+            ret[_remove_unicode(dimname)] = (units, typecode, _remove_unicode(dimname), 
+                                             '', 'global', i)
+                                             
         return ret
 
 
     def __getattr__(self, attr):
-        return self._obj.getncattr(attr)
-
+        return _remove_unicode(self._obj.getncattr(attr))
+                                             
     def __setattr__(self, attr, value):
+        #!TODO: Should we convert to unicode?
         return self._obj.setncattr(attr, value)
 
     # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
     def _attrs(self):
-        return self._obj.ncattrs()
+        return [_remove_unicode(v) for v in self._obj.ncattrs()]
 
     def _getattr(self, attr):
-        return self._obj.getncattr(attr)
+        return _remove_unicode(self._obj.getncattr(attr))
 
     def close(self):
         self._obj.close()
@@ -136,13 +145,13 @@ class CdunifVariable(AbstractCdunifVariable):
 
     # Replaces access to attributes via __dict__.  cdms2 needs to be patched to use this instead
     def _attrs(self):
-        return self._obj.ncattrs()
+        return [_remove_unicode(v) for v in (self._obj.ncattrs())]
 
     def _getattr(self, attr):
-        return self._obj.getncattr(attr)
+        return _remove_unicode(self._obj.getncattr(attr))
 
     def __getattr__(self, attr):
-        return self._obj.getncattr(attr)
+        return _remove_unicode(self._obj.getncattr(attr))
 
     def __setattr__(self, attr, value):
         return self._obj.setncattr(attr, value)
