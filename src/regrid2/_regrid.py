@@ -69,3 +69,19 @@ def rgdlength():
 
 def rgdpressure():
     raise NotImplementedError
+
+
+
+
+def _gaussian_grid():
+    raise NotImplementedError
+
+def _equalarea_grid(n, pts, wts, bnds):
+    raise NotImplementedError
+
+def _uniform_latitude_grid(n, pts, wts, bnds):
+    raise NotImplementedError
+
+def _uniform_longitude_grid(n, blon, elon, pts, wts, bnds):
+    raise NotImplementedError
+
