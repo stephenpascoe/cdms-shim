@@ -23,3 +23,5 @@ Do we need regrid?  It is used by cdms2.axis, cdms2.avariable and cdms2.grid
  - cdms2.grid : 
    - used in genBounds() (similar to cdms2.axis) : reimplement
    - used in classify() : as above
+
+We should be able to implement the gridattr function from _regrid and remove the rest

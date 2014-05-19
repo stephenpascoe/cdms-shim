@@ -25,7 +25,7 @@ def gridattr(n, grid_type, blon=None, elon=None):
     bnds = np.zeros(n+1, dtype=np.float)
 
     if grid_type[:3] == 'gau':
-        _gassian_grid(n, pts, wts, bnds)
+        _gaussian_grid(n, pts, wts, bnds)
     elif grid_type[:3] == 'equ':
         _equalarea_grid(n, pts, wts, bnds)
     elif grid_type[:3] == 'uni':
